@@ -190,9 +190,15 @@
             <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 text-gray-700 dark:text-slate-400">
                 Social Engineering attacks bypass technology by targeting <span class="font-bold text-red-600 dark:text-red-400">you</span>. Learn the dark art of deception to build an impenetrable defense.
             </p>
-            <button id="launch-quiz-btn" onclick="showModal('quizModal', true)" class="inline-flex items-center justify-center px-10 py-4 border border-red-500 text-lg font-bold rounded-lg shadow-xl text-white bg-red-600 hover:bg-red-700 transition duration-300 transform hover:scale-[1.05] card-shadow">
-                Launch Full Training <i class="fas fa-brain text-xl ml-3" aria-hidden="true"></i>
-            </button>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
+                <button id="launch-quiz-btn" onclick="showModal('quizModal', true)" class="inline-flex items-center justify-center px-10 py-4 border border-red-500 text-lg font-bold rounded-lg shadow-xl text-white bg-red-600 hover:bg-red-700 transition duration-300 transform hover:scale-[1.05] card-shadow w-full md:w-auto">
+                    Launch Full Training <i class="fas fa-brain text-xl ml-3" aria-hidden="true"></i>
+                </button>
+                <button onclick="showModal('mcqQuizModal', true)" class="inline-flex items-center justify-center px-8 py-3 border border-red-500 text-md font-bold rounded-lg shadow-xl text-red-600 bg-transparent hover:bg-red-50 dark:hover:bg-zinc-800 transition duration-300 transform hover:scale-[1.03] card-shadow dark:text-red-400 w-full md:w-auto">
+                    Take 10-Question Test <i class="fas fa-list-ol text-xl ml-3" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
     </section>
     
@@ -399,9 +405,14 @@
             <p class="text-lg text-gray-700 dark:text-slate-400 max-w-3xl mx-auto mb-8">
                 Test your knowledge against a simulated attack. Can you identify all the red flags in this suspicious email?
             </p>
-            <button onclick="showModal('quizModal', true)" class="inline-flex items-center justify-center px-8 py-3 border border-red-500 text-md font-bold rounded-lg text-white bg-red-800 hover:bg-red-700 transition duration-300 transform hover:scale-[1.03]">
-                Re-Launch Training Simulation <i class="fas fa-play ml-2"></i>
-            </button>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
+                <button onclick="showModal('quizModal', true)" class="inline-flex items-center justify-center px-8 py-3 border border-red-500 text-md font-bold rounded-lg text-white bg-red-800 hover:bg-red-700 transition duration-300 transform hover:scale-[1.03]">
+                    Re-Launch Flagging Training <i class="fas fa-play ml-2"></i>
+                </button>
+                <button onclick="showModal('mcqQuizModal', true)" class="inline-flex items-center justify-center px-8 py-3 border border-red-500 text-md font-bold rounded-lg shadow-xl text-red-600 bg-transparent hover:bg-red-50 dark:hover:bg-zinc-800 transition duration-300 transform hover:scale-[1.03] card-shadow dark:text-red-400">
+                    Retake 10-Question Test <i class="fas fa-list-ol text-xl ml-3" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
     </section>
 
@@ -524,6 +535,7 @@
         </div>
     </footer>
 
+    <!-- Full Training Flagging Quiz Modal -->
     <div id="quizModal" class="fixed inset-0 hidden modal-overlay items-center justify-center p-4 z-[99]" onclick="if(event.target.id === 'quizModal') closeModal('quizModal')">
         <div class="bg-white dark:bg-zinc-900 border border-red-400 dark:border-red-700 rounded-xl w-full max-w-2xl p-4 md:p-6 shadow-2xl card-shadow transform transition-all duration-300">
             <div class="flex justify-between items-center mb-6 border-b pb-3 border-gray-300 dark:border-zinc-700">
@@ -559,6 +571,51 @@
 
             <div class="flex justify-end mt-8">
                 <button onclick="handleNext()" id="next-button" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium">Next</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- NEW MCQ Quiz Modal -->
+    <div id="mcqQuizModal" class="fixed inset-0 hidden modal-overlay items-center justify-center p-4 z-[99]" onclick="if(event.target.id === 'mcqQuizModal') closeModal('mcqQuizModal')">
+        <div class="bg-white dark:bg-zinc-900 border border-red-400 dark:border-red-700 rounded-xl w-full max-w-xl p-6 shadow-2xl card-shadow transform transition-all duration-300">
+            <div class="flex justify-between items-center mb-6 border-b pb-3 border-gray-300 dark:border-zinc-700">
+                <h3 class="text-3xl font-extrabold text-red-600 dark:text-red-400 header-font">
+                    <i class="fas fa-list-ol mr-2"></i> Multiple-Choice Test
+                </h3>
+                <button onclick="closeModal('mcqQuizModal')" class="text-gray-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-500 transition">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Quiz Content Area -->
+            <div id="mcq-quiz-content">
+                <div id="mcq-question-progress" class="text-sm font-medium text-gray-600 dark:text-slate-400 mb-4">Question 1/10</div>
+                
+                <h4 id="mcq-question-text" class="text-xl font-bold mb-6 text-gray-900 dark:text-white min-h-[50px]">
+                    [Question text will load here...]
+                </h4>
+                
+                <div id="mcq-options-container" class="space-y-3">
+                    <!-- Options will be dynamically loaded here -->
+                </div>
+                
+                <div id="mcq-controls" class="flex flex-col mt-8">
+                    <p id="mcq-feedback" class="text-sm italic pt-2 mb-4 text-red-500 dark:text-red-400 min-h-6"></p>
+                    <button id="mcq-next-button" onclick="handleMCQNext()" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        Next Question
+                    </button>
+                </div>
+            </div>
+
+            <!-- Result Screen -->
+            <div id="mcq-result-screen" class="hidden text-center py-10">
+                <i class="fas fa-award text-6xl text-yellow-500 mb-4"></i>
+                <h4 class="text-3xl font-extrabold text-red-600 dark:text-red-400 mb-3">Test Completed!</h4>
+                <p class="text-xl text-gray-900 dark:text-white mb-6">Your Score:</p>
+                <p id="mcq-final-score" class="text-7xl font-extrabold text-green-500 header-font">10/10</p>
+                <button onclick="showModal('mcqQuizModal', true)" class="mt-8 px-6 py-2 bg-gray-600 dark:bg-zinc-700 text-white rounded-lg hover:bg-gray-700 dark:hover:bg-zinc-600 transition font-medium">
+                    Try Again
+                </button>
             </div>
         </div>
     </div>
@@ -606,11 +663,13 @@
             }
         }
         
+        // --- Flagging Quiz Logic ---
         let currentQuizIndex = 0;
         let identifiedFlags = 0;
         let totalFlags = 0;
 
         const quizScenarios = [
+            // ... (Quiz Scenarios remain the same) ...
             {
                 title: "Phase 1: Phishing Simulation (Email)",
                 sender: `<span id="flag-sender-misspell" class="red-flag" onclick="checkAnswer('flag-sender-misspell')">support@micros0ft.com</span>`,
@@ -740,6 +799,7 @@ Do not reply to this number. <FLAG_VISHING_THREAT>Call 0800-444-5555 for assista
             }
         }
         
+        // Modified showModal to handle both quiz types
         function showModal(modalId, reset = false) {
             const modal = document.getElementById(modalId);
             if (modal) {
@@ -747,6 +807,8 @@ Do not reply to this number. <FLAG_VISHING_THREAT>Call 0800-444-5555 for assista
                 modal.classList.add('flex');
                 if (modalId === 'quizModal') {
                     initializeQuiz(reset);
+                } else if (modalId === 'mcqQuizModal') {
+                    showMCQModal(reset);
                 }
             }
         }
@@ -832,8 +894,10 @@ Do not reply to this number. <FLAG_VISHING_THREAT>Call 0800-444-5555 for assista
                 category.keywords.forEach(keywordOrRegex => {
                     let regex;
                     if (typeof keywordOrRegex === 'string') {
+                        // Use word boundaries for string keywords
                         regex = new RegExp(`\\b${keywordOrRegex}\\b`, 'gi');
                     } else {
+                        // Use the provided regex for complex patterns (like URLs)
                         regex = keywordOrRegex;
                     }
 
@@ -994,10 +1058,278 @@ Do not reply to this number. <FLAG_VISHING_THREAT>Call 0800-444-5555 for assista
 
             showToast("All phases complete! Excellent work.", 'info');
         }
+        
+        // --- MCQ Quiz Logic (NEW) ---
+        let mcqScore = 0;
+        let mcqCurrentQuestionIndex = 0;
+        let mcqAnswerSelected = null;
+
+        const mcqQuestions = [
+            {
+                question: "What is the primary target of social engineering attacks?",
+                options: [
+                    "Network firewalls",
+                    "Human users",
+                    "Server operating systems",
+                    "Encrypted databases"
+                ],
+                answer: 1, // Index of correct option
+                explanation: "Social engineering targets the **human element**—people's trust, curiosity, and instincts."
+            },
+            {
+                question: "Which of the following is a classic social engineering red flag?",
+                options: [
+                    "A message with perfect grammar and spelling",
+                    "A request to verify credentials due to 'immediate account suspension'",
+                    "A scheduled software update notification",
+                    "An email from a known colleague"
+                ],
+                answer: 1,
+                explanation: "Creating a sense of **urgency and threat** (like immediate suspension) is the most common psychological tactic."
+            },
+            {
+                question: "What is 'Vishing'?",
+                options: [
+                    "Phishing conducted via video call",
+                    "Phishing conducted via SMS text messages (Smishing)",
+                    "Phishing conducted via voice calls or voicemails",
+                    "Phishing conducted via an infected USB drive (Baiting)"
+                ],
+                answer: 2,
+                explanation: "Vishing is **Voice Phishing**, using phone calls to manipulate victims."
+            },
+            {
+                question: "In the context of security, what does a 'Pretext' refer to?",
+                options: [
+                    "A secret password used for MFA",
+                    "A convincing, fabricated scenario used to engage the victim",
+                    "A hidden piece of malicious code in a link",
+                    "The email subject line of a phishing attempt"
+                ],
+                answer: 1,
+                explanation: "Pretexting involves creating a believable **backstory or scenario** to extract information."
+            },
+            {
+                question: "What is the most effective technical countermeasure against stolen passwords from a phishing attack?",
+                options: [
+                    "Using strong passwords",
+                    "Multi-Factor Authentication (MFA)",
+                    "Installing anti-virus software",
+                    "Regular password changes"
+                ],
+                answer: 1,
+                explanation: "**MFA** ensures that even if an attacker steals a password, they cannot log in without the secondary factor (e.g., a code from your phone)."
+            },
+            {
+                question: "What is 'Baiting' typically designed to exploit?",
+                options: [
+                    "The victim's sense of duty",
+                    "The victim's desire for revenge",
+                    "The victim's curiosity or greed",
+                    "The victim's professional fear"
+                ],
+                answer: 2,
+                explanation: "Baiting uses lures, like a 'free premium software' or a suspicious USB drive, to exploit **curiosity**."
+            },
+            {
+                question: "If you receive an unexpected email from your CEO requesting an urgent wire transfer to a new account, what should be your first step?",
+                options: [
+                    "Reply to the email asking for confirmation",
+                    "Immediately process the transfer to avoid delay",
+                    "Call the CEO's office on a known, official number to verify the request",
+                    "Delete the email and ignore it"
+                ],
+                answer: 2,
+                explanation: "You must always **verify unusual or financial requests** through an independent, pre-approved channel (like calling their known extension or using a different communication method)."
+            },
+            {
+                question: "What makes AI-powered deepfakes particularly dangerous for social engineering?",
+                options: [
+                    "They use more colors in the presentation",
+                    "They eliminate traditional red flags like poor grammar and can mimic voices/faces perfectly",
+                    "They only target specific industries",
+                    "They require victims to have special software installed"
+                ],
+                answer: 1,
+                explanation: "AI eliminates common mistakes (typos, bad grammar) and creates **hyper-realistic audio/video**, making the deception harder to spot based on perception alone."
+            },
+            {
+                question: "Why should you limit the public sharing of personal information on social media?",
+                options: [
+                    "It affects your credit score",
+                    "Attackers can use these details to create believable pretexts",
+                    "It slows down your computer",
+                    "It violates most company policies"
+                ],
+                answer: 1,
+                explanation: "Attackers collect public information (like pet names, hometowns) to make their fabricated stories (**pretexts**) more convincing and personalized."
+            },
+            {
+                question: "Tailgating is a physical social engineering attack where:",
+                options: [
+                    "An attacker follows an authorized person into a restricted area",
+                    "An attacker plants a malicious device in a server room",
+                    "An attacker steals mail from a delivery box",
+                    "An attacker uses a drone to record restricted information"
+                ],
+                answer: 0,
+                explanation: "Tailgating is **following an authorized person** through a secured door without scanning credentials. The defense is to always challenge unknown individuals."
+            }
+        ];
+
+        function showMCQModal(reset = false) {
+            const modal = document.getElementById('mcqQuizModal');
+            const quizContent = document.getElementById('mcq-quiz-content');
+            const resultScreen = document.getElementById('mcq-result-screen');
+            
+            if (reset) {
+                mcqScore = 0;
+                mcqCurrentQuestionIndex = 0;
+            }
+
+            if (mcqCurrentQuestionIndex < mcqQuestions.length) {
+                quizContent.classList.remove('hidden');
+                resultScreen.classList.add('hidden');
+                loadQuestion(mcqCurrentQuestionIndex);
+            } else {
+                // If quiz is finished and we are restarting
+                mcqScore = 0;
+                mcqCurrentQuestionIndex = 0;
+                quizContent.classList.remove('hidden');
+                resultScreen.classList.add('hidden');
+                loadQuestion(mcqCurrentQuestionIndex);
+            }
+        }
+
+        function loadQuestion(index) {
+            const question = mcqQuestions[index];
+            document.getElementById('mcq-question-progress').textContent = `Question ${index + 1}/${mcqQuestions.length}`;
+            document.getElementById('mcq-question-text').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('mcq-options-container');
+            optionsContainer.innerHTML = ''; // Clear previous options
+            
+            mcqAnswerSelected = null;
+            document.getElementById('mcq-next-button').disabled = true;
+            document.getElementById('mcq-feedback').textContent = '';
+
+            question.options.forEach((option, i) => {
+                const button = document.createElement('button');
+                // Removed inline click handler to prevent double firing, using event listeners in selectAnswer
+                button.className = 'mcq-option w-full text-left p-3 rounded-lg border border-gray-300 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-800 text-gray-900 dark:text-slate-200 hover:bg-red-50 dark:hover:bg-red-900/50 transition duration-200 shadow-md focus:ring-2 focus:ring-red-500';
+                button.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+                button.setAttribute('data-index', i);
+                button.onclick = () => selectAnswer(i, button);
+                optionsContainer.appendChild(button);
+            });
+
+            const nextButton = document.getElementById('mcq-next-button');
+            if (index === mcqQuestions.length - 1) {
+                nextButton.textContent = 'Submit Test';
+            } else {
+                nextButton.textContent = 'Next Question';
+            }
+        }
+
+        function selectAnswer(selectedIndex, selectedButton) {
+            const options = document.querySelectorAll('#mcq-options-container .mcq-option');
+            options.forEach(btn => {
+                btn.classList.remove('bg-red-100', 'dark:bg-red-800/80', 'border-red-500', 'font-bold');
+                btn.classList.add('bg-gray-50', 'dark:bg-zinc-800');
+            });
+
+            // Visually mark selection
+            selectedButton.classList.remove('bg-gray-50', 'dark:bg-zinc-800');
+            selectedButton.classList.add('bg-red-100', 'dark:bg-red-800/80', 'border-red-500', 'font-bold');
+            
+            mcqAnswerSelected = selectedIndex;
+            document.getElementById('mcq-next-button').disabled = false;
+        }
+
+        function handleMCQNext() {
+            if (mcqAnswerSelected === null) {
+                document.getElementById('mcq-feedback').textContent = 'Please select an answer before proceeding.';
+                return;
+            }
+            
+            const currentQuestion = mcqQuestions[mcqCurrentQuestionIndex];
+            const isCorrect = mcqAnswerSelected === currentQuestion.answer;
+            
+            // Check answer and update score
+            if (isCorrect) {
+                mcqScore++;
+            }
+            
+            // Show feedback and highlight
+            const options = document.querySelectorAll('#mcq-options-container .mcq-option');
+            const feedbackEl = document.getElementById('mcq-feedback');
+            const nextButton = document.getElementById('mcq-next-button');
+            
+            options.forEach((btn, i) => {
+                // Disable all options
+                btn.onclick = null;
+                btn.classList.remove('bg-red-100', 'dark:bg-red-800/80', 'border-red-500');
+
+                if (i === currentQuestion.answer) {
+                    // Correct answer
+                    btn.classList.add('bg-green-500', 'dark:bg-green-700', 'text-white', 'font-bold');
+                } else if (i === mcqAnswerSelected && !isCorrect) {
+                    // Wrong selection
+                    btn.classList.add('bg-red-500', 'dark:bg-red-700', 'text-white', 'line-through');
+                }
+            });
+
+            feedbackEl.textContent = isCorrect ? 
+                `Correct! ${currentQuestion.explanation}` : 
+                `Incorrect. ${currentQuestion.explanation}`;
+            
+            feedbackEl.classList.remove('text-red-500', 'text-green-500');
+            feedbackEl.classList.add(isCorrect ? 'text-green-500' : 'text-red-500');
+
+
+            // Temporarily disable the next button logic until delay is over
+            nextButton.disabled = true;
+
+            // Use a small delay to let user see feedback before moving on
+            setTimeout(() => {
+                mcqCurrentQuestionIndex++;
+                if (mcqCurrentQuestionIndex < mcqQuestions.length) {
+                    loadQuestion(mcqCurrentQuestionIndex);
+                } else {
+                    submitQuiz();
+                }
+            }, 2000); // 2 second delay
+        }
+
+        function submitQuiz() {
+            const quizContent = document.getElementById('mcq-quiz-content');
+            const resultScreen = document.getElementById('mcq-result-screen');
+            const finalScoreEl = document.getElementById('mcq-final-score');
+            
+            quizContent.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+            
+            finalScoreEl.textContent = `${mcqScore}/${mcqQuestions.length}`;
+
+            // Update the result message style based on score
+            finalScoreEl.classList.remove('text-yellow-500', 'text-red-500', 'text-green-500');
+            if (mcqScore >= 8) {
+                finalScoreEl.classList.add('text-green-500');
+            } else if (mcqScore >= 5) {
+                finalScoreEl.classList.add('text-yellow-500');
+            } else {
+                finalScoreEl.classList.add('text-red-500');
+            }
+            
+            showToast(`Test finished! You scored ${mcqScore} out of ${mcqQuestions.length}.`, 'info', 6000);
+        }
     
         window.onload = () => {
             initializeTheme();
             initializeQuiz(true);
+            // Ensure MCQ is ready to go too
+            showMCQModal(true);
+            closeModal('mcqQuizModal');
         };
     </script>
 </body>
